@@ -1,0 +1,24 @@
+Author:                 Hank Preston
+Contact Info:           hapresto@cisco.com
+README Updated Date:    2015-02-17
+
+This repository will provide python interfaces for manipulating and working with
+Cisco's Cloud Software Stack including UCS Director and Intercloud Fabric Director.
+(with others to come over time)
+
+There are two main python modules that contain different functions for each product:
+  ucsd_library.py contains functions for working with UCS Director
+  icfd_library.py contains functions for working with ICF Director
+
+Before using either the python functions or the CLI options, you must update/create
+local_config.py with relant server_addresses and authkeys for your environment.
+
+Other than the _library files, the others should all function as CLI scripts.
+Run each with "-h" to get details on their use.  For example:
+
+./ucsd_workflow_execute.py "Add VLAN to Data Center" -i '{"VLAN-ID":"1001", "VLAN Name":"NewVLAN"}'
+
+Will create a Service Request to execute a workflow called "Add VLAN to Data Center"
+with inputs of  '{"VLAN-ID":"1001", "VLAN Name":"NewVLAN"}'
+
+This repository is a living holding pen I use for labs and demos.  Check back often for updates.
