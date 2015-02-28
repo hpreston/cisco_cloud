@@ -18,8 +18,8 @@ if __name__ == '__main__':
     p = ArgumentParser()
     p.add_argument('-g', '--group',                          # Name stored in namespace
                    metavar = 'ICFD End User Group',            # Arguement name displayed to user
-                   help = 'The ICFD End User Group to Query for.  - Default to "Cloud Users',
-                   type = str, default=""
+                   help = 'The ICFD End User Group to Query for.  - Default to "Default Group"',
+                   type = str, default="Default Group"
                     )
     p.add_argument('-p', '--provider',                          # Name stored in namespace
                    metavar = 'ICFD Provider Account',            # Arguement name displayed to user

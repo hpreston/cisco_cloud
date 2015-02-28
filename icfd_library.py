@@ -226,7 +226,7 @@ def vm_terminate(vmid):
 
     return j
 
-def catalog_list(group="Cloud Users@csc.richfield.cisco.com"):
+def catalog_list(group="Default Group"):
     '''
     Get a list of Catalog Options for a Group
     :param group:  The ICFD Group to Query on behalf of

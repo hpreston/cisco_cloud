@@ -1,6 +1,6 @@
 Author:                 Hank Preston
 Contact Info:           hapresto@cisco.com
-README Updated Date:    2015-02-17
+README Updated Date:    2015-02-28
 
 This repository will provide python interfaces for manipulating and working with
 Cisco's Cloud Software Stack including UCS Director and Intercloud Fabric Director.
@@ -22,3 +22,12 @@ Will create a Service Request to execute a workflow called "Add VLAN to Data Cen
 with inputs of  '{"VLAN-ID":"1001", "VLAN Name":"NewVLAN"}'
 
 This repository is a living holding pen I use for labs and demos.  Check back often for updates.
+
+
+
+****************************************************************************************************
+Legal Disclaimer... 
+The samples and code provided here is provided without warranty from myself or Cisco Systems.  
+It is simply provided as an example of working with the APIs included in the referenced products, 
+and was created by the author and is not an official extension of the software from Cisco.  
+****************************************************************************************************
