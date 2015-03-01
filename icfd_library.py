@@ -127,7 +127,9 @@ def sr_details(srnumber):
 
     r = requests.get(u, headers=headers)
 
-    return r.text
+    j = json.loads(r.text)
+
+    return j['serviceResult']
 
 def vm_list():
     '''
