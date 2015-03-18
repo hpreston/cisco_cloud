@@ -159,8 +159,10 @@ def vm_details(vmid):
     r = requests.get(u, headers=headers)
 
     j = json.loads(r.text)
-
-    return j['serviceResult']['rows']
+    if j['serviceError']:
+      return j['serviceError']
+    else:
+      return j['serviceResult']['rows']
 
 def vm_poweron(vmid):
     '''
