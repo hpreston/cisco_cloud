@@ -28,7 +28,7 @@ Run each with "-h" to get details on their use.  For example:
 ``` 
 
 Will create a Service Request to execute a workflow called "Add VLAN to Data Center"
-with inputs of  '{"VLAN-ID":"1001", "VLAN Name":"NewVLAN"}'
+with inputs of  ``` '{"VLAN-ID":"1001", "VLAN Name":"NewVLAN"}' ```
 
 This repository is a living holding pen I use for labs and demos.  Check back often for updates.
 
