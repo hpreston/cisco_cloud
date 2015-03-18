@@ -1,12 +1,14 @@
 # Cisco Intercloud Fabric Scripts
 
-## Original Author
-Author:                 Hank Preston
-Contact Info:           hapresto@cisco.com
-
 This repository will provide python interfaces for manipulating and working with
 Cisco's Cloud Software Stack including UCS Director and Intercloud Fabric Director.
 (with others to come over time)
+
+## Author Information
+
+Author: Hank Preston
+Contact Info: hapresto@cisco.com
+
 
 ## Usage
 
@@ -21,9 +23,9 @@ local_config.py with relant server_addresses and authkeys for your environment.
 Other than the _library files, the others should all function as CLI scripts.
 Run each with "-h" to get details on their use.  For example:
 
-'''
+```bash
 ./ucsd_workflow_execute.py "Add VLAN to Data Center" -i '{"VLAN-ID":"1001", "VLAN Name":"NewVLAN"}'
-''' 
+``` 
 
 Will create a Service Request to execute a workflow called "Add VLAN to Data Center"
 with inputs of  '{"VLAN-ID":"1001", "VLAN Name":"NewVLAN"}'
