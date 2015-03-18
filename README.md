@@ -6,8 +6,8 @@ Cisco's Cloud Software Stack including UCS Director and Intercloud Fabric Direct
 
 ## Author Information
 
-Author: Hank Preston
-Contact Info: hapresto@cisco.com
+**Author** Hank Preston
+**Contact Info** hapresto@cisco.com
 
 
 ## Usage
