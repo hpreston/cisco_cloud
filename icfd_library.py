@@ -7,15 +7,17 @@ __author__ = 'hapresto'
 
 # import standard variables and configuration info
 from local_config import icfdserver, icfd_key, url, getstring, parameter_lead, headers
+from cloud_library import dict_filter, list_search
 headers["X-Cloupia-Request-Key"] = icfd_key
 
 import requests
 import json
 
-
-def icfcloud_list():
+def icfcloud_list(key_filter = [], result_filter = {}):
     '''
     Query ICF Director for a list of all icfClouds configured
+    :param key_filter: A sub-list of keys from the returned data to filter for
+    :param result_filter: A dictionary of key/value pairs to filter the result list down by (OR logic).
     :return:
     '''
 
@@ -26,8 +28,10 @@ def icfcloud_list():
     r = requests.get(u, headers=headers)
 
     j = json.loads(r.text)
+    j['serviceResult']['rows'] = list_search(j['serviceResult']['rows'], result_filter)
 
-    return j['serviceResult']['rows']
+    search_results = [dict_filter(r, key_filter) for r in j['serviceResult']['rows']]
+    return search_results
 
 def workflow_inputs(workflow):
     '''
@@ -99,10 +103,12 @@ def icfcloud_startstop(icfCloudId):
 
     return j
 
-def icfcloud_details(icfCloudId):
+def icfcloud_details(icfCloudId, key_filter = [], result_filter = {}):
     '''
     Return the details of the specified icfCloud
     :param icfCloudId:  The icfCloud ID to return status for
+    :param key_filter: A sub-list of keys from the returned data to filter for
+    :param result_filter: A dictionary of key/value pairs to filter the result list down by (OR logic).
     :return:
     '''
     apioperation = "Intercloud:userAPIGeticfCloudSummary"
@@ -112,8 +118,10 @@ def icfcloud_details(icfCloudId):
     r = requests.get(u, headers=headers)
 
     j = json.loads(r.text)
+    j['serviceResult']['rows'] = list_search(j['serviceResult']['rows'], result_filter)
 
-    return j['serviceResult']['rows']
+    search_results = [dict_filter(r, key_filter) for r in j['serviceResult']['rows']]
+    return search_results
 
 def sr_details(srnumber):
     '''
@@ -131,9 +139,11 @@ def sr_details(srnumber):
 
     return j['serviceResult']
 
-def vm_list():
+def vm_list(key_filter = [], result_filter = {}):
     '''
     Return a list of all VMs known by ICF Director
+    :param key_filter: A sub-list of keys from the returned data to filter for
+    :param result_filter: A dictionary of key/value pairs to filter the result list down by (OR logic).
     :return:
     '''
     apioperation = "userAPIGetAllVMs"
@@ -143,13 +153,17 @@ def vm_list():
     r = requests.get(u, headers=headers)
 
     j = json.loads(r.text)
+    j['serviceResult']['rows'] = list_search(j['serviceResult']['rows'], result_filter)
 
-    return j['serviceResult']['rows']
+    search_results = [dict_filter(r, key_filter) for r in j['serviceResult']['rows']]
+    return search_results
 
-def vm_details(vmid):
+def vm_details(vmid, key_filter = [], result_filter = {}):
     '''
     Return the known details of the specified VM
     :param vmid: The ICFD VMID for the Virtual Machine
+    :param key_filter: A sub-list of keys from the returned data to filter for
+    :param result_filter: A dictionary of key/value pairs to filter the result list down by (OR logic).
     :return:
     '''
     apioperation = "Intercloud:userAPIGetVMSummary"
@@ -160,14 +174,17 @@ def vm_details(vmid):
 
     j = json.loads(r.text)
     if j['serviceError']:
-      return j['serviceError']
+        return j['serviceError']
     else:
-      return j['serviceResult']['rows']
+        j['serviceResult']['rows'] = list_search(j['serviceResult']['rows'], result_filter)
+        search_results = [dict_filter(r, key_filter) for r in j['serviceResult']['rows']]
+        return search_results
 
 def vm_poweron(vmid):
     '''
     Power on the specified Cloud Virtual Machine
     :param vmid:  The ICFD VMID for the Cloud VM
+    :param key_filter: A sub-list of keys from the returned data to filter for
     :return:
     '''
     apioperation = "Intercloud:userAPIVmPowerOn"
@@ -186,6 +203,7 @@ def vm_poweroff(vmid):
     '''
     Power off the specified Cloud Virtual Machine
     :param vmid:  The ICFD VMID for the Cloud VM
+    :param key_filter: A sub-list of keys from the returned data to filter for
     :return:
     '''
     apioperation = "Intercloud:userAPIVmPowerOff"
@@ -202,6 +220,7 @@ def vm_reboot(vmid):
     '''
     Reboot the specified Cloud Virtual Machine
     :param vmid:  The ICFD VMID for the Cloud VM
+    :param key_filter: A sub-list of keys from the returned data to filter for
     :return:
     '''
     apioperation = "Intercloud:userAPIVmReboot"
@@ -218,6 +237,7 @@ def vm_terminate(vmid):
     '''
     Terminate the specified Cloud Virtual Machine
     :param vmid:  The ICFD VMID for the Cloud VM
+    :param key_filter: A sub-list of keys from the returned data to filter for
     :return:
     '''
     apioperation = "Intercloud:userAPIVmTerminate"
@@ -230,10 +250,12 @@ def vm_terminate(vmid):
 
     return j
 
-def catalog_list(group="Default Group"):
+def catalog_list(group="Default Group", key_filter = [], result_filter = {}):
     '''
     Get a list of Catalog Options for a Group
     :param group:  The ICFD Group to Query on behalf of
+    :param key_filter: A sub-list of keys from the returned data to filter for
+    :param result_filter: A dictionary of key/value pairs to filter the result list down by (OR logic).
     :return:
     '''
     apioperation = "userAPIGetCatalogsPerGroup"
@@ -244,7 +266,10 @@ def catalog_list(group="Default Group"):
 
     j = json.loads(r.text)
 
-    return j
+    j['serviceResult']['rows'] = list_search(j['serviceResult']['rows'], result_filter)
+
+    search_results = [dict_filter(r, key_filter) for r in j['serviceResult']['rows']]
+    return search_results
 
 def catalog_order(catalog, vdc, comment=""):
     '''
@@ -290,10 +315,12 @@ def sr_vms(srnumber):
 
     return j['serviceResult']['vms']
 
-def vdc_list(group="", provider=""):
+def vdc_list(group="", provider="", key_filter = [], result_filter = {}):
     '''
     Return a list of all VDCs for a group if provided
     :param group:  The ICFD Group to return VDCs for... default all groups
+    :param key_filter: A sub-list of keys from the returned data to filter for
+    :param result_filter: A dictionary of key/value pairs to filter the result list down by (OR logic).
     :return:
     '''
     apioperation = "userAPIGetAllVDCs"
@@ -312,4 +339,8 @@ def vdc_list(group="", provider=""):
             if (vdc['Cloud'] == provider or provider ==""):
                 group_vdcs.append(vdc)
 
-    return group_vdcs
+    group_vdcs = list_search(group_vdcs, result_filter)
+
+    search_results = [dict_filter(r, key_filter) for r in group_vdcs]
+    return search_results
+
